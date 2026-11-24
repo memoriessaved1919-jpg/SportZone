@@ -4,7 +4,11 @@ import shopController from "./controllers/shop.controller";
 
 /** Shop **/
 routerAdmin.get("/", shopController.goHome);
-routerAdmin.get("/login", shopController.getLogin);
-routerAdmin.get("/signup", shopController.getSignup);
+routerAdmin
+  .get("/login", shopController.getLogin)
+  .post("/login", shopController.processLogin);
+routerAdmin
+  .get("/signup", shopController.getSignup)
+  .post("/signup", shopController.processSignup);
 
 export default routerAdmin;

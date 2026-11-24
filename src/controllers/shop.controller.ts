@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
 import { T } from "../libs/types/common";
+import MemberService from "../models/Member.service";
+import { LoginInput, MemberInput } from "../libs/types/member";
+import { MemberType } from "../libs/enums/member.enum";
+import Errors, { Message } from "../libs/Errors";
+
+const memberService = new MemberService();
 
 const shopController: T = {};
 
@@ -27,6 +33,39 @@ shopController.getSignup = (req: Request, res: Response) => {
     res.send("Signup Page");
   } catch (err) {
     console.log("Error, getSignup", err);
+  }
+};
+
+shopController.processSignup = async (req: Request, res: Response) => {
+  try {
+    console.log("processSignup");
+    const newMember: MemberInput = req.body;
+    newMember.memberType = MemberType.SHOP;
+
+    const result = await memberService.processSignup(newMember);
+    // TODO: SESSIONS AUTHENTICATION
+    res.send(result);
+  } catch (err) {
+    console.log("Error, processSignup", err);
+    const message =
+      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(message);
+  }
+};
+
+shopController.processLogin = async (req: Request, res: Response) => {
+  try {
+    console.log("processLogin");
+    const input: LoginInput = req.body;
+
+    const result = await memberService.processLogin(input);
+    // TODO: SESSIONS AUTHENTICATION
+    res.send(result);
+  } catch (err) {
+    console.log("Error, processLogin", err);
+    const message =
+      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(message);
   }
 };
 

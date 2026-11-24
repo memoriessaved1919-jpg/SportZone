@@ -1,0 +1,89 @@
+<%- include('includes/header') %>
+
+<link rel="stylesheet" type="text/css" href="/css/signup.css" />
+
+<body>
+  <div class="signup-container">
+    <form
+      onsubmit="return validateSignupForm();"
+      action="/admin/signup"
+      method="POST"
+    >
+      <div class="signup-frame" style="width: 650px">
+        <div class="signup-top">
+          <span>Signup</span>
+          <div>Go back <a href="/admin" style="color: #6440fb">Home</a></div>
+          <p>
+            Already signed up?
+            <a href="/admin/login" style="color: #6440fb">Login</a>
+          </p>
+        </div>
+
+        <div class="sign-input-frame" style="justify-content: space-between">
+          <div class="sign-up-frame">
+            <label>Shop *</label>
+            <input
+              type="text"
+              name="memberNick"
+              class="member-nick"
+              placeholder="Username"
+            />
+          </div>
+          <div class="sign-up-frame">
+            <label>Phone *</label>
+            <input
+              type="text"
+              name="memberPhone"
+              class="member-phone"
+              placeholder="Phone"
+            />
+          </div>
+        </div>
+
+        <div class="sign-input-frame" style="justify-content: space-between">
+          <div class="sign-up-frame">
+            <label>Password *</label>
+            <input
+              type="password"
+              name="memberPassword"
+              class="member-password"
+              placeholder="Password"
+            />
+          </div>
+          <div class="sign-up-frame">
+            <label>Repeat password *</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              class="confirm-password"
+              placeholder="Repeat password"
+            />
+          </div>
+        </div>
+
+        <button class="signup-btn btn" type="submit">Signup</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function validateSignupForm() {
+      const nick = $(".member-nick").val();
+      const phone = $(".member-phone").val();
+      const password = $(".member-password").val();
+      const confirm = $(".confirm-password").val();
+
+      if (!nick || !phone || !password || !confirm) {
+        alert("Please fill in all fields!");
+        return false;
+      }
+      if (password !== confirm) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+
+<%- include('includes/footer') %>
